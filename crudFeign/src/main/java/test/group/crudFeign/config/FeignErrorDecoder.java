@@ -31,7 +31,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
 
     private String extractMessageFromBody(Response response) {
         if (response.body() == null) {
-            return "No message available";
+            return "no message available";
         }
         try (InputStream inputStream = response.body().asInputStream()) {
             byte[] bytes = inputStream.readAllBytes();
