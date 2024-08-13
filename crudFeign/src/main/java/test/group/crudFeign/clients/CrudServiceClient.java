@@ -8,7 +8,7 @@ import test.group.crudFeign.dto.PersonCreateRequest;
 import test.group.crudFeign.dto.PersonUpdateRequest;
 
 
-@FeignClient(name = "crud-service", url = "localhost:8080")
+@FeignClient(name = "crud-service-client", url = "localhost:8080")
 public interface CrudServiceClient {
     @GetMapping("/{id}")
     Person getPersonById(@PathVariable Long id);

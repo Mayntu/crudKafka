@@ -1,43 +1,33 @@
 package test.group.crudFeign.services;
 
 import org.springframework.stereotype.Service;
-import test.group.crudFeign.customExceptions.PersonNotFoundException;
+import test.group.crudFeign.clients.CrudServiceClient;
+import test.group.crudFeign.dto.Person;
 import test.group.crudFeign.dto.PersonCreateRequest;
 import test.group.crudFeign.dto.PersonUpdateRequest;
-import test.group.crudFeign.dto.Person;
-import test.group.crudFeign.clients.CrudServiceClient;
 
 @Service
 public class PersonService
 {
-    private final CrudServiceClient personRepository;
+    private final CrudServiceClient personRequest;
 
-    public PersonService(CrudServiceClient personRepository) {
-        this.personRepository = personRepository;
+    public PersonService(CrudServiceClient personRequest) {
+        this.personRequest = personRequest;
     }
 
     public Person create(PersonCreateRequest personCreateRequest) {
-        return personRepository.createPerson(personCreateRequest);
+        return personRequest.createPerson(personCreateRequest);
     }
 
     public Person get(Long id) {
-        personRepository.getPersonById(id);
+        return personRequest.getPersonById(id);
     }
 
     public Person update(PersonUpdateRequest personUpdateRequest, Long id) {
-        Person person = get(id);
-        if (personUpdateRequest.getName() != null) {
-            person.setName(personUpdateRequest.getName());
-        }
-
-        if (personUpdateRequest.getGender() != null) {
-            person.setGender(personUpdateRequest.getGender());
-        }
-        return personRepository.save(person);
+        return personRequest.updatePerson(personUpdateRequest);
     }
 
     public void delete(Long id) {
-        Person person = get(id);
-        personRepository.delete(person);
+        personRequest.deletePerson(id);
     }
 }
