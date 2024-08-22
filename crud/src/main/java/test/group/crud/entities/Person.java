@@ -29,6 +29,14 @@ public class Person {
         this.gender = gender;
     }
 
+    public Person(Long id, String name, String surname, int age, String gender) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.gender = gender;
+    }
+
     public Long getId() {
         return id;
     }
