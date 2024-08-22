@@ -1,4 +1,4 @@
-package test.group.crud.controllers;
+package test.group.crudFeign.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,10 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import test.group.crud.dto.PersonCreateRequest;
-import test.group.crud.dto.PersonUpdateRequest;
-import test.group.crud.entities.Person;
-import test.group.crud.services.PersonService;
+import test.group.crudFeign.dto.PersonCreateRequest;
+import test.group.crudFeign.dto.PersonUpdateRequest;
+import test.group.crudFeign.dto.Person;
+import test.group.crudFeign.services.PersonService;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -44,8 +44,8 @@ public class PersonControllerTest {
         String json = objectMapper.writeValueAsString(person);
         when(personService.create(any(PersonCreateRequest.class))).thenReturn(person);
         mockMvc.perform(post("/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("test"))
@@ -77,8 +77,8 @@ public class PersonControllerTest {
         when(personService.update(any(PersonUpdateRequest.class), eq(1L))).thenReturn(updatedPerson);
 
         mockMvc.perform(patch("/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(personUpdateRequestJson))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(personUpdateRequestJson))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("test"))
                 .andExpect(jsonPath("$.surname").value("testSurname"))

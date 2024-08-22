@@ -36,8 +36,8 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> apiDelete(@PathVariable Long id) {
+    public ResponseEntity<Void> apiDelete(@PathVariable Long id) {
         personService.delete(id);
-        return ResponseEntity.ok().body("success");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
